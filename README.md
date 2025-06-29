@@ -1,50 +1,86 @@
-# Welcome to your Expo app 👋
+# Book Tracker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Running the App Locally
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
+1. **Install dependencies:**
+   ```sh
    npm install
    ```
 
-2. Start the app
-
-   ```bash
-   npx expo start
+2. **Start the Expo development server:**
+   ```sh
+   npm start
+   ```
+   or
+   ```sh
+   expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. **Run on your device or emulator:**
+   - For Android:  
+     ```sh
+     npm run android
+     ```
+   - For iOS:  
+     ```sh
+     npm run ios
+     ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+4. **Run on Expo Go: (Recommended)**
+   - Download the **Expo Go** app from the Apple App store or Android play store.
+   - Start the Expo development server (`npm start` or `expo start`).
+   - Scan the QR code shown in your terminal or browser with the Expo Go app to open the project on your device.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+5. **Development builds (optional, for native debugging):**
+   - Android:  
+     ```sh
+     npx eas build --profile development --platform android
+     ```
+   - iOS:  
+     ```sh
+     npx eas build --profile development --platform ios
+     ```
 
-When you're ready, run:
+6. **Production build (standalone, not reliant on dev server):**
+   ```sh
+   npx eas build --profile production --platform android
+   ```
 
-```bash
-npm run reset-project
-```
+7. **Run tests:**
+   ```sh
+   npm test
+   ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## Architecture and stack
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Expo Router** is used for navigation, enabling file-based routing and easy deep linking.
+- **Tabs Navigation**: The app uses a simple tab layout for "My Books" and "Browse" screens, with custom icons mapped to Material Icons for cross-platform consistency.
+- **SQLite Storage**: User's books are stored locally using `expo-sqlite` for persistence, with utility functions for CRUD operations.
+- **Hooks**: Custom React hooks (`useBooks`, `useMyBooks`) are used for fetching and managing book data, providing a clean and reusable data layer.
+- **UI**: The app uses React Native components and a simple, clean style for readability and maintainability.
+- **Testing**: Jest and React Testing Library are set up for unit testing hooks and logic.
+- **Production Builds**: EAS is configured for both development and production builds, allowing for local development and standalone APK generation.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## Notes
 
-Join our community of developers creating universal apps.
+- The app is designed to work offline after a production build.
+- Book data for browsing is fetched from a remote JSON endpoint mimcking an API, while "My Books" are stored locally.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## TODO
+
+- Add user authentication and profiles.
+- Implement book search and categoric filtering in the Browse screen.
+- Add the ability to add a rating or mark books as read/unread in "My Books".
+- Improve error handling throughout the app.
+- Enhance unit and integration test coverage.
+- Add support for syncing "My Books" to cloud storage.
+- Implement push notifications for book updates or recommendations.
+- Optimize performance for large datasets and slow devices.
+- Refactor code for better modularity and reusability.
