@@ -1,11 +1,18 @@
 import { useMyBooks } from '@/hooks/useMyBooks';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { deleteBook } from '../utils/db';
 
 const MyBooksScreen = () => {
   const [expandedBookId, setExpandedBookId] = useState<number | null>(null);
   const { books, loading, error, refresh } = useMyBooks();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refresh();
+    }, 10000); // Refresh every 10 seconds
+    return () => clearInterval(interval);
+  }, [refresh]);
 
   const toggleExpand = (id: number) => {
     setExpandedBookId(expandedBookId === id ? null : id);
