@@ -1,14 +1,14 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
-import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
-import { createTable, getBooks, insertOrUpdateBook } from '../../utils/db'; // Adjust the path if needed
+import { Alert, Button, Image, ScrollView, StyleSheet, Text } from 'react-native';
+import { createTable, insertOrUpdateBook } from '../../utils/db';
 
 const BookDetailsScreen = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
 
   const handleAddToMyBooks = () => {
-    createTable(); // Create the table if it doesn't exist
+    createTable();
     insertOrUpdateBook(
       {
         title: params.title as string,
@@ -19,8 +19,6 @@ const BookDetailsScreen = () => {
       },
       () => {
         Alert.alert('Added!', `${params.title} has been added to My Books.`);
-        getBooks(() => {}, (error) => console.log('Error fetching books:', error));
-        Alert.alert('Success', 'Book added successfully!');
         router.back();
       },
       (error) => {
@@ -30,14 +28,14 @@ const BookDetailsScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image source={{ uri: params.image_url as string }} style={styles.image} />
       <Text style={styles.title}>{params.title}</Text>
       <Text style={styles.author}>by {params.author}</Text>
       <Text style={styles.isbn}>{params.isbn}</Text>
       <Text style={styles.description}>{params.description}</Text>
       <Button title="Add to My Books" onPress={handleAddToMyBooks} />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -45,9 +43,10 @@ export default BookDetailsScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 24,
     backgroundColor: '#fff',
+    alignItems: 'center',
   },
   image: {
     width: 120,
