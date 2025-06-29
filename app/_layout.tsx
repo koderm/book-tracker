@@ -11,7 +11,7 @@ const RootLayout = () => (
       }}
     />
     <Tabs.Screen name="MyBooks" options={{ title: "My Books" }} />
-    <Tabs.Screen name="Browse" options={{ title: "Browse" }} />
+    <Tabs.Screen name="browse" options={{ title: "Browse", headerShown: false }} />
   </Tabs>
 );
 

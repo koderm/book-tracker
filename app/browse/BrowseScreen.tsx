@@ -1,12 +1,21 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useBooks } from '../hooks/useBooks';
+import { useBooks } from '../../hooks/useBooks';
 
 const BrowseScreen = () => {
   const { books, loading } = useBooks();
+  const router = useRouter();
+
+  const handlePress = (item: any) => {
+    router.push({
+      pathname: '/browse/BookDetailsScreen',
+      params: {...item},
+    });
+  };
 
   const renderItem = ({ item }: { item: any }) => (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={() => handlePress(item)}>
       <Image source={{ uri: item.image_url }} style={styles.image} />
       <View style={styles.info}>
         <Text style={styles.title}>{item.title}</Text>
