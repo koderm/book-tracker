@@ -60,7 +60,6 @@ export const insertOrUpdateBook = (
 export const getBooks = (onSuccess: (books: Book[]) => void, onError?: (err: any) => void) => {
   try {
     const result = db.getAllSync(`SELECT * FROM my_books`) as Book[];
-    console.log('Books fetched:', result);
     onSuccess(result);
   } catch (error) {
     onError && onError(error);
