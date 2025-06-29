@@ -1,43 +1,62 @@
+import { useMyBooks } from '@/hooks/useMyBooks';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-const books = [
-  { id: '1', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', rating: 4.5 },
-  { id: '2', title: '1984', author: 'George Orwell', rating: 4.8 },
-  { id: '3', title: 'To Kill a Mockingbird', author: 'Harper Lee', rating: 4.7 },
-];
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const MyBooksScreen = () => {
-  const [expandedBookId, setExpandedBookId] = useState<string | null>(null);
+  const [expandedBookId, setExpandedBookId] = useState<number | null>(null);
+  const { books, loading, error } = useMyBooks();
 
-  const toggleExpand = (id: string) => {
+  const toggleExpand = (id: number) => {
     setExpandedBookId(expandedBookId === id ? null : id);
   };
 
-  const renderItem = ({ item }: { item: { id: string; title: string; author: string; rating: number } }) => {
+  const renderItem = ({ item }: { item: any }) => {
     const isExpanded = expandedBookId === item.id;
 
     return (
       <TouchableOpacity style={styles.item} onPress={() => toggleExpand(item.id)}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.author}>by {item.author}</Text>
+        <View style={styles.row}>
+          <Image source={{ uri: item.image_url }} style={styles.image} />
+          <View style={styles.info}>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.author}>by {item.author}</Text>
+            <Text style={styles.isbn}>{item.isbn}</Text>
+          </View>
+        </View>
         {isExpanded && (
           <View style={styles.details}>
-            <Text style={styles.detailText}>Author: {item.author}</Text>
-            <Text style={styles.detailText}>Rating: {item.rating}</Text>
+            <Text style={styles.detailText}>{item.description}</Text>
           </View>
         )}
       </TouchableOpacity>
     );
   };
 
+  if (loading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#666" />
+        <Text>Loading your books...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={{ color: 'red' }}>Failed to load books.</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>My Books</Text>
       <FlatList
         data={books}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id?.toString() ?? item.isbn}
         renderItem={renderItem}
+        ListEmptyComponent={<Text style={styles.empty}>No books found.</Text>}
       />
     </View>
   );
@@ -65,6 +84,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  image: {
+    width: 60,
+    height: 90,
+    borderRadius: 4,
+    marginRight: 12,
+    backgroundColor: '#ddd',
+  },
+  info: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -72,6 +106,11 @@ const styles = StyleSheet.create({
   author: {
     fontSize: 14,
     color: '#666',
+  },
+  isbn: {
+    fontSize: 12,
+    color: '#999',
+    marginBottom: 4,
   },
   details: {
     marginTop: 10,
@@ -82,5 +121,16 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 14,
     color: '#333',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  empty: {
+    textAlign: 'center',
+    color: '#999',
+    marginTop: 40,
+    fontSize: 16,
   },
 });
