@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
 import { Alert } from 'react-native';
-import BookDetailsScreen from './BookDetailsScreen';
+import BookDetailsScreen from '../../../app/browse/BookDetailsScreen';
 
 // Mock dependencies
 jest.mock('expo-router', () => ({
@@ -17,7 +17,7 @@ jest.mock('expo-router', () => ({
   }),
 }));
 
-jest.mock('../../utils/db', () => ({
+jest.mock('../../../utils/db', () => ({
   createTable: jest.fn(),
   insertOrUpdateBook: jest.fn((book, onSuccess) => onSuccess && onSuccess()),
 }));

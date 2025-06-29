@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react-native';
-import { useBooks } from './useBooks';
+import { useBooks } from '../../hooks/useBooks';
 
 global.fetch = jest.fn(() =>
   Promise.resolve({

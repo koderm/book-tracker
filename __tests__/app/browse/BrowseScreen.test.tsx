@@ -1,9 +1,9 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
-import BrowseScreen from './BrowseScreen';
+import BrowseScreen from '../../../app/browse/BrowseScreen';
 
 // Mock useBooks to provide test data
-jest.mock('../../hooks/useBooks', () => ({
+jest.mock('../../../hooks/useBooks', () => ({
   useBooks: () => ({
     books: [
       {

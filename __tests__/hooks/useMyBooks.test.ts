@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react-native';
-import * as db from '../utils/db';
-import { useMyBooks } from './useMyBooks';
+import { useMyBooks } from '../../hooks/useMyBooks';
+import * as db from '../../utils/db';
 
-jest.mock('../utils/db');
+jest.mock('../../utils/db');
 jest.mock('expo-sqlite');
 
 const mockBooks = [
