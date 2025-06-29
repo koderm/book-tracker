@@ -1,15 +1,32 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
+import { createTable, getBooks, insertOrUpdateBook } from '../../utils/db'; // Adjust the path if needed
 
 const BookDetailsScreen = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
 
   const handleAddToMyBooks = () => {
-    // You can implement actual logic here
-    Alert.alert('Added!', `${params.title} has been added to My Books.`);
-    router.back();
+    createTable(); // Create the table if it doesn't exist
+    insertOrUpdateBook(
+      {
+        title: params.title as string,
+        author: params.author as string,
+        isbn: params.isbn as string,
+        image_url: params.image_url as string,
+        description: params.description as string,
+      },
+      () => {
+        Alert.alert('Added!', `${params.title} has been added to My Books.`);
+        getBooks(() => {}, (error) => console.log('Error fetching books:', error));
+        Alert.alert('Success', 'Book added successfully!');
+        router.back();
+      },
+      (error) => {
+        Alert.alert('Error', 'Failed to add book. ', error.message);
+      }
+    );
   };
 
   return (
