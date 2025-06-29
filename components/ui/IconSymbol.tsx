@@ -13,6 +13,8 @@ const MAPPING: IconMapping = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
+  'books.vertical.fill': 'menu-book',
+  'magnifyingglass': 'search',
 };
 
 /**
