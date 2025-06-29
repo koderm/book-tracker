@@ -69,13 +69,6 @@ If you would like to try it out without local dev setup feel free to download an
 
 ---
 
-## Notes
-
-- The app is designed to work offline after a production build.
-- Book data for browsing is fetched from a remote JSON endpoint mimcking an API, while "My Books" are stored locally.
-
----
-
 ## TODO
 
 - Add user authentication and profiles.
