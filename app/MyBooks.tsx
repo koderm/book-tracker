@@ -1,13 +1,34 @@
 import { useMyBooks } from '@/hooks/useMyBooks';
 import React, { useState } from 'react';
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { deleteBook } from '../utils/db';
 
 const MyBooksScreen = () => {
   const [expandedBookId, setExpandedBookId] = useState<number | null>(null);
-  const { books, loading, error } = useMyBooks();
+  const { books, loading, error, refresh } = useMyBooks();
 
   const toggleExpand = (id: number) => {
     setExpandedBookId(expandedBookId === id ? null : id);
+  };
+
+  const handleDelete = (id: number) => {
+    Alert.alert(
+      'Delete Book',
+      'Are you sure you want to delete this book?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            deleteBook(id, () => {
+              Alert.alert('Deleted', 'Book has been deleted.');
+              refresh();
+            });
+          },
+        },
+      ]
+    );
   };
 
   const renderItem = ({ item }: { item: any }) => {
@@ -26,6 +47,7 @@ const MyBooksScreen = () => {
         {isExpanded && (
           <View style={styles.details}>
             <Text style={styles.detailText}>{item.description}</Text>
+            <Button title="Delete" color="#d32f2f" onPress={() => handleDelete(item.id)} />
           </View>
         )}
       </TouchableOpacity>
@@ -121,6 +143,7 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 14,
     color: '#333',
+    marginBottom: 10,
   },
   centered: {
     flex: 1,

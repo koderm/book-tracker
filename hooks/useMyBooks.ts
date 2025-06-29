@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getBooks } from '../utils/db';
 
 interface Book {
@@ -15,7 +15,8 @@ export const useMyBooks = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | Error>(null);
 
-  useEffect(() => {
+  const fetchBooks = useCallback(() => {
+    setLoading(true);
     getBooks(
       (result) => {
         setBooks(result);
@@ -28,5 +29,9 @@ export const useMyBooks = () => {
     );
   }, []);
 
-  return { books, loading, error };
+  useEffect(() => {
+    fetchBooks();
+  }, [fetchBooks]);
+
+  return { books, loading, error, refresh: fetchBooks };
 };
