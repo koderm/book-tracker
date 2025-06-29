@@ -1,5 +1,8 @@
 # Book Tracker
 
+Book tracker is a simple app that allows users to select from a list of books that interest them and save them in a personalized book collection, they can also delete an an entry from their books in the instance that they may not need it in their collection any more. Future iterations of the app will allow users to add ratings and read/unread statuses to books in their collections.
+
+If you would like to try it out without local dev setup feel free to download and install via the [.apk](https://drive.google.com/file/d/1ugmbCWCteTxkeLr-p8NMcq0g9INIbnH2/view?usp=drive_link) I have hosted on google drive, otherwise you can just run the local setup with either expo go or a development build.
 ## Running the App Locally
 
 1. **Install dependencies:**
@@ -13,7 +16,7 @@
    ```
    or
    ```sh
-   expo start
+   expo startn
    ```
 
 3. **Run on your device or emulator:**
