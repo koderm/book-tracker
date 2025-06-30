@@ -19,23 +19,13 @@ If you would like to try it out without local dev setup feel free to download an
    expo startn
    ```
 
-3. **Run on your device or emulator:**
-   - For Android:  
-     ```sh
-     npm run android
-     ```
-   - For iOS:  
-     ```sh
-     npm run ios
-     ```
-
-4. **Run on Expo Go: (Recommended)**
+3. **Run on Expo Go: (Recommended)**
    - Download the **Expo Go** app from the Apple App store or Android play store.
    - Start the Expo development server (`npm start` or `expo start`).
    - Scan the QR code shown in your terminal or browser with the Expo Go app to open the project on your device.
 
 
-5. **Development builds (optional, for native debugging):**
+4. **Development builds (optional, for native debugging):**
    - Android:  
      ```sh
      npx eas build --profile development --platform android
@@ -44,13 +34,15 @@ If you would like to try it out without local dev setup feel free to download an
      ```sh
      npx eas build --profile development --platform ios
      ```
+     [Pre built dev build](https://expo.dev/accounts/koderm/projects/book-tracker/builds/124b12a9-6b96-471d-a29c-444e3c5f7c81)
+     Just ensure you are connected to the metro bundler when running a development build.
 
-6. **Production build (standalone, not reliant on dev server):**
+5. **Production build (standalone, not reliant on dev server):**
    ```sh
    npx eas build --profile production --platform android
    ```
 
-7. **Run tests:**
+6. **Run tests:**
    ```sh
    npm test
    ```
